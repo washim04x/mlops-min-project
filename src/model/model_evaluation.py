@@ -8,24 +8,28 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_a
 import logging
 import mlflow
 import mlflow.sklearn
-# import dagshub
+import dagshub
 import os
 
-# # Set up DagsHub credentials for MLflow tracking
-# dagshub_token = os.getenv("DAGSHUB_PAT")
-# if not dagshub_token:
-#     raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
+# Set up DagsHub credentials for MLflow tracking
+dagshub_token = os.getenv("DAGSHUB_PAT")
+if not dagshub_token:
+    raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
 
-# os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
-# os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
-# dagshub_url = "https://dagshub.com"
-# repo_owner = "campusx-official"
-# repo_name = "mlops-mini-project"
+
+
+
+dagshub_url = "https://dagshub.com"
+repo_owner = "washim04x"
+repo_name = "mlops-min-project"
+
 
 # # Set up MLflow tracking URI
-# mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
+mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
+# mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
 # logging configuration
 logger = logging.getLogger('model_evaluation')
@@ -116,7 +120,7 @@ def save_model_info(run_id: str, model_path: str, file_path: str) -> None:
         raise
 
 def main():
-    mlflow.set_experiment("dvc-pipeline")
+    mlflow.set_experiment("dvc-pipeline-sentiment-analysis")
     with mlflow.start_run() as run:  # Start an MLflow run
         try:
             clf = load_model('./models/model.pkl')

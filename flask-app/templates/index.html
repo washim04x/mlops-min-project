@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment analysis</title>
+</head>
+<body>
+    <h1>Sentiment analysis</h1>
+    <form action="/predict" method="post">
+        <label for="text">Enter text:</label><br>
+        <textarea type="text" id="text" name="text" rows="10" cols="40" required></textarea><br><br>
+        <input type="submit" value="Analyze Sentiment">
+    </form>
+
+    {% if prediction is not none %}
+        {% if prediction == 1 %}
+            <h2>Positive Sentiment 😊</h2>
+        {% else %}
+            <h2>Negative Sentiment 😞</h2>
+        {% endif %}
+    {% endif %}
+    
+</body>
+</html>

@@ -17,6 +17,8 @@ jobs :
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name : Run pipeliene
+        env :
+          DAGSHUB_PAT : ${{ secrets.DAGSHUB_PAT }}
         run : |
           dvc repro
 

@@ -20,7 +20,7 @@ repo_name = "mlops-min-project"
 
 # # Set up MLflow tracking URI
 mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
-dagshub.init(repo_owner=repo_owner, repo_name=repo_name, mlflow=True)
+
 
 
 app = Flask(__name__)

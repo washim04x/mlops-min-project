@@ -2,7 +2,16 @@ from flask import Flask,render_template,request
 import mlflow
 from .preprocessing_utility import normalize_text
 import pickle
+import os
 vectorizer = pickle.load(open('models/vectorizer.pkl','rb'))
+
+# Set up DagsHub credentials for MLflow tracking
+dagshub_token = os.getenv("DAGSHUB_PAT")
+if not dagshub_token:
+    raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
 import dagshub
 dagshub_url = "https://dagshub.com"

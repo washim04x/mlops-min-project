@@ -4,10 +4,6 @@ from preprocessing_utility import normalize_text
 import pickle
 vectorizer = pickle.load(open('models/vectorizer.pkl','rb'))
 
-
-
-
-
 import dagshub
 dagshub_url = "https://dagshub.com"
 repo_owner = "washim04x"
@@ -28,6 +24,7 @@ def get_latest_model_version(model_name):
         raise ValueError(f"No versions found for model '{model_name}' in Staging or Production stages.")
     latest_version = max(versions, key=lambda v: v.version)
     return latest_version.version
+
 
 # load model
 model_name = 'model'

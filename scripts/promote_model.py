@@ -13,15 +13,15 @@ def promote_model():
     os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
     dagshub_url = "https://dagshub.com"
-    repo_owner = "campusx-official"
-    repo_name = "mlops-mini-project"
+    repo_owner = "washim04x"
+    repo_name = "mlops-min-project"
 
     # Set up MLflow tracking URI
     mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
 
     client = mlflow.MlflowClient()
 
-    model_name = "my_model"
+    model_name = "model"
     # Get the latest version in staging
     latest_version_staging = client.get_latest_versions(model_name, stages=["Staging"])[0].version
 

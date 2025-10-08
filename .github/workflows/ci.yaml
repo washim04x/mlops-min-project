@@ -77,15 +77,10 @@ jobs :
       #     docker push ${{secrets.DOCKER_USERNAME}}/sentiment1:latest 
       - name : deploy to EC2
         if : success()
-        uses : appleboy/ssh-action@v0.1.7
-        with:
-          host : ${{ secrets.EC2_HOST }}
-          username : ${{ secrets.EC2_USER }}
-          key : ${{ secrets.EC2_KEY }}
-          script : |
-            docker pull 307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x_ecr:v1
-            docker stop sentiment_app || true
-            docker rm sentiment_app || true
-            docker run -d -p 80:5000 --name sentiment_app \
-              -e DAGSHUB_PAT=${{ secrets.DAGSHUB_PAT }} \
-              307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x_ecr:v1
+        run : |
+          docker pull 307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x_ecr:v1
+          docker stop sentiment_app || true
+          docker rm sentiment_app || true
+          docker run -d -p 80:5000 --name sentiment_app \
+            -e DAGSHUB_PAT=${{ secrets.DAGSHUB_PAT }} \
+            307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x_ecr:v1

@@ -71,4 +71,6 @@ jobs :
             docker pull ${{secrets.DOCKER_USERNAME}}/sentiment1:latest
             docker stop sentiment_app || true
             docker rm sentiment_app || true
-            docker run -d -p 80:5000 --name sentiment_app \ -e DAGSHUB_PAT= ${{ secrets.DAGSHUB_PAT }} \  ${{secrets.DOCKER_USERNAME}}/sentiment1:latest
+            docker run -d -p 80:5000 --name sentiment_app \
+              -e DAGSHUB_PAT=${{ secrets.DAGSHUB_PAT }} \
+              ${{ secrets.DOCKER_USERNAME }}/sentiment1:latest

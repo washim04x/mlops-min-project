@@ -21,6 +21,10 @@ WORKDIR /app
 # Copy only the necessary files from the build stage
 COPY --from=Build /app /app
 
+# Copy installed packages from the build stage
+COPY --from=Build /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+
+
 #expose the port
 
 EXPOSE 5000

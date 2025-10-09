@@ -13,7 +13,7 @@ COPY models/vectorizer.pkl /app/models/vectorizer.pkl
 RUN pip install --no-cache-dir -r flask_app/requirements.txt
 RUN python -m nltk.downloader stopwords wordnet
 
-#stage 2: Run the application
+# Stage 2: Run the application
 FROM python:3.11-slim AS Run
 
 WORKDIR /app
@@ -21,13 +21,12 @@ WORKDIR /app
 # Copy only the necessary files from the build stage
 COPY --from=Build /app /app
 
-# Copy installed packages from the build stage
+# Copy installed Python packages and executables from the build stage
 COPY --from=Build /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=Build /usr/local/bin /usr/local/bin
 
-
-#expose the port
-
+# Expose the port
 EXPOSE 5000
 
+# Run the app with Gunicorn
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "flask_app.app:app"]
-

@@ -1,4 +1,5 @@
-FROM python:3.11
+# Stage 1: Build the application
+FROM python:3.11 AS Build
 
 WORKDIR /app
 
@@ -9,8 +10,18 @@ COPY flask_app/ /app/flask_app/
 COPY models/vectorizer.pkl /app/models/vectorizer.pkl
 
 # Install requirements
-RUN pip install -r flask_app/requirements.txt
+RUN pip install --no-cache-dir -r flask_app/requirements.txt
 RUN python -m nltk.downloader stopwords wordnet
+
+#stage 2: Run the application
+FROM python:3.11-slim AS Run
+
+WORKDIR /app
+
+# Copy only the necessary files from the build stage
+COPY --from=Build /app /app
+
+#expose the port
 
 EXPOSE 5000
 

@@ -53,13 +53,13 @@ jobs :
           aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 307657261563.dkr.ecr.eu-north-1.amazonaws.com
       - name : build docker image
         run : |
-          docker build -t washim04x_ecr .
+          docker build -t washim04x/sentiment .
       - name : Tag docker image
         run : |
-          docker tag washim04x_ecr:latest 307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x_ecr:v1
+          docker tag washim04x/sentiment:latest 307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x/sentiment:v1
       - name : Push docker image to ECR
         run : |
-          docker push 307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x_ecr:v1
+          docker push 307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x/sentiment:v1
       # - name : login to DockerHub
       #   if : success()
       #   uses : docker/login-action@v2
@@ -86,9 +86,9 @@ jobs :
             aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws configure set default.region eu-north-1
             aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 307657261563.dkr.ecr.eu-north-1.amazonaws.com
-            docker pull 307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x_ecr:v1
+            docker pull 307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x/sentiment:v1
             docker stop sentiment_app || true
             docker rm sentiment_app || true
             docker run -d -p 80:5000 --name sentiment_app \
               -e DAGSHUB_PAT=${{ secrets.DAGSHUB_PAT }} \
-              307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x_ecr:v1
+              307657261563.dkr.ecr.eu-north-1.amazonaws.com/washim04x/sentiment:v1

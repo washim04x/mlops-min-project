@@ -1,6 +1,6 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template ,request
 import mlflow
-from flask_app.preprocessing_utility import normalize_text
+from preprocessing_utility import normalize_text
 import pickle
 import os
 vectorizer = pickle.load(open('models/vectorizer.pkl','rb'))
